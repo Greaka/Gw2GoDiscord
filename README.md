@@ -1,2 +1,2 @@
-# Gw2GoDiscord [![Build Status](https://travis-ci.org/Greaka/Gw2GoDiscord.svg?branch=master)](https://travis-ci.org/Greaka/Gw2GoDiscord) [![Coverage Status](https://coveralls.io/repos/github/Greaka/Gw2GoDiscord/badge.svg?branch=master)](https://coveralls.io/github/Greaka/Gw2GoDiscord?branch=master)
+# Gw2GoDiscord [![Build Status](https://travis-ci.org/Greaka/Gw2GoDiscord.svg?branch=master)](https://travis-ci.org/Greaka/Gw2GoDiscord) [![Coverage Status](https://coveralls.io/repos/github/Greaka/Gw2GoDiscord/badge.svg?branch=master)](https://coveralls.io/github/Greaka/Gw2GoDiscord?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/Greaka/Gw2GoDiscord)](https://goreportcard.com/report/github.com/Greaka/Gw2GoDiscord)
 A Gw2 Discord bot written in Go
