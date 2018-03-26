@@ -5,5 +5,5 @@ import (
 )
 
 func Log(err error) {
-	fmt.Println("%v", err)
+	fmt.Printf("%v\n", err)
 }

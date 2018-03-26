@@ -19,7 +19,7 @@ var (
 func InitializeDiscord(token string) {
 	dg, err := discordgo.New("Bot " + token)
 	if err != nil {
-		fmt.Println("error creating Discord session,", err)
+		fmt.Printf("error creating Discord session, %v\n", err)
 		return
 	}
 
@@ -27,12 +27,12 @@ func InitializeDiscord(token string) {
 
 	err = dg.Open()
 	if err != nil {
-		fmt.Println("error opening connection, ", err)
+		fmt.Printf("error opening connection, %v\n", err)
 		return
 	}
 	defer dg.Close()
 
-	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
+	fmt.Printf("Bot is now running.  Press CTRL-C to exit.\n")
 
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
@@ -50,7 +50,7 @@ func handleMessage(session *discordgo.Session, message *discordgo.MessageCreate)
 
 	if message.Content == "ping" {
 		if _, err := session.ChannelMessageSend(message.ChannelID, "pong!"); err != nil {
-			fmt.Println("%v", err)
+			fmt.Printf("%v\n", err)
 		}
 		return
 	}
