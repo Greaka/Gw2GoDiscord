@@ -40,7 +40,18 @@ func InitializeDiscord(token string) {
 }
 
 func messageReceived(session *discordgo.Session, message *discordgo.MessageCreate) {
+	go handleMessage(session, message)
+}
+
+func handleMessage(session *discordgo.Session, message *discordgo.MessageCreate) {
 	if message.Author.ID == session.State.User.ID {
+		return
+	}
+
+	if message.Content == "ping" {
+		if _, err := session.ChannelMessageSend(message.ChannelID, "pong!"); err != nil {
+			fmt.Println("%v", err)
+		}
 		return
 	}
 
@@ -63,7 +74,6 @@ func messageReceived(session *discordgo.Session, message *discordgo.MessageCreat
 		checkForDM(session, message)
 		return
 	}
-
 }
 
 func checkForDM(session *discordgo.Session, message *discordgo.MessageCreate) {
@@ -76,5 +86,18 @@ func checkForDM(session *discordgo.Session, message *discordgo.MessageCreate) {
 		session.ChannelMessageSend(message.ChannelID, language.NotACommand(language.English))
 	case discordgo.ChannelTypeGroupDM:
 		session.ChannelMessageSend(message.ChannelID, language.NotACommand(language.English))
+	}
+}
+
+func sendMessage(session *discordgo.Session, channelId, content string) {
+	perm, e := session.UserChannelPermissions(session.State.User.ID, channelId)
+	if e != nil {
+		Log(e)
+		return
+	}
+	if perm&discordgo.PermissionSendMessages != 0 {
+		if _, err := session.ChannelMessageSend(channelId, content); err != nil {
+			Log(err)
+		}
 	}
 }

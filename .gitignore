@@ -15,3 +15,8 @@
 
 # vscode
 .vscode/
+
+# debug
+./debug
+debug
+debug/
