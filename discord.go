@@ -13,9 +13,11 @@ import (
 )
 
 var (
-	Prefix string = ";"
+	// Prefix is a placeholder until redis settings
+	Prefix = ";"
 )
 
+// Initializes the connection to discord and holds the program until interruption
 func InitializeDiscord(token string) {
 	dg, err := discordgo.New("Bot " + token)
 	if err != nil {
@@ -65,7 +67,7 @@ func handleMessage(session *discordgo.Session, message *discordgo.MessageCreate)
 		return
 	}
 
-	go session.ChannelTyping(message.ChannelID)
+	go session.ChannelTyping(message.ChannelID) // nolint: errcheck
 
 	switch splitted[0] {
 	case commands.CommandKey:
@@ -83,20 +85,20 @@ func checkForDM(session *discordgo.Session, message *discordgo.MessageCreate) {
 	}
 	switch channel.Type {
 	case discordgo.ChannelTypeDM:
-		session.ChannelMessageSend(message.ChannelID, language.NotACommand(language.English))
+		sendMessage(session, message.ChannelID, language.NotACommand(language.English))
 	case discordgo.ChannelTypeGroupDM:
-		session.ChannelMessageSend(message.ChannelID, language.NotACommand(language.English))
+		sendMessage(session, message.ChannelID, language.NotACommand(language.English))
 	}
 }
 
-func sendMessage(session *discordgo.Session, channelId, content string) {
-	perm, e := session.UserChannelPermissions(session.State.User.ID, channelId)
+func sendMessage(session *discordgo.Session, channelID, content string) {
+	perm, e := session.UserChannelPermissions(session.State.User.ID, channelID)
 	if e != nil {
 		Log(e)
 		return
 	}
 	if perm&discordgo.PermissionSendMessages != 0 {
-		if _, err := session.ChannelMessageSend(channelId, content); err != nil {
+		if _, err := session.ChannelMessageSend(channelID, content); err != nil {
 			Log(err)
 		}
 	}
